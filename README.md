@@ -1,26 +1,24 @@
 # re-demo
 
 A [re-frame](https://github.com/Day8/re-frame) application designed to
-... well, that part is up to you.
+... well, that part is up to you. The project was generated from the
+[template](https://github.com/Day8/re-frame-template).
+
+FIXME: what is the point of *.clj source?
 
 ## Development Mode
 
 ### Run application:
 
-```
-lein clean
-lein figwheel dev
-```
+    lein clean
+    lein figwheel dev
 
 Figwheel will automatically push cljs changes to the browser.  Wait a
 bit, then browse to [http://localhost:3449](http://localhost:3449).
 
 ## Production Build
 
-
 To compile clojurescript to javascript:
 
-```
-lein clean
-lein cljsbuild once min
-```
+    lein clean
+    lein cljsbuild once min
