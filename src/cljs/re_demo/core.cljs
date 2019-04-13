@@ -3,11 +3,16 @@
    [reagent.core :as reagent]
    [re-frame.core :as re-frame]
    [re-demo.events :as events]
-   [re-demo.views :as views]
-   [re-demo.config :as config]
-   ))
+   [re-demo.subs :as subs]
+   [re-demo.config :as config]))
 
+;; View:
+(defn main-panel []
+  (let [name (re-frame/subscribe [::subs/name])]
+    [:div
+     [:h1 "Hello from " @name ", dear reader!"]]))
 
+;; Core
 (defn dev-setup []
   (when config/debug?
     (enable-console-print!)
@@ -15,7 +20,7 @@
 
 (defn mount-root []
   (re-frame/clear-subscription-cache!)
-  (reagent/render [views/main-panel]
+  (reagent/render [main-panel]
                   (.getElementById js/document "app")))
 
 (defn ^:export init []
