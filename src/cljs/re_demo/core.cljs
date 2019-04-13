@@ -2,8 +2,14 @@
   (:require
    [reagent.core :as reagent]
    [re-frame.core :as re-frame]
-   [re-demo.events :as events]
+   [re-demo.db :as db]
    [re-demo.config :as config]))
+
+;; Events:
+(re-frame/reg-event-db
+ ::initialize-db
+ (fn [_ _]
+   db/default-db))
 
 ;; Subs:
 (re-frame/reg-sub
@@ -29,6 +35,6 @@
                   (.getElementById js/document "app")))
 
 (defn ^:export init []
-  (re-frame/dispatch-sync [::events/initialize-db])
+  (re-frame/dispatch-sync [::initialize-db])
   (dev-setup)
   (mount-root))
