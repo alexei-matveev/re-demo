@@ -5,11 +5,15 @@
    [re-demo.db :as db]
    [re-demo.config :as config]))
 
+;; DB:
+(def default-db
+  {:name "re-frame"})
+
 ;; Events:
 (re-frame/reg-event-db
  ::initialize-db
  (fn [_ _]
-   db/default-db))
+   default-db))
 
 ;; Subs:
 (re-frame/reg-sub
