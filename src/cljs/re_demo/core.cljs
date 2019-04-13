@@ -3,16 +3,21 @@
    [reagent.core :as reagent]
    [re-frame.core :as re-frame]
    [re-demo.events :as events]
-   [re-demo.subs :as subs]
    [re-demo.config :as config]))
+
+;; Subs:
+(re-frame/reg-sub
+ ::name
+ (fn [db]
+   (:name db)))
 
 ;; View:
 (defn main-panel []
-  (let [name (re-frame/subscribe [::subs/name])]
+  (let [name (re-frame/subscribe [::name])]
     [:div
-     [:h1 "Hello from " @name ", dear reader!"]]))
+     [:h1 "Hello from " @name ", dear Reader!"]]))
 
-;; Core
+;; Core:
 (defn dev-setup []
   (when config/debug?
     (enable-console-print!)
