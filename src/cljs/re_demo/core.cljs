@@ -1,9 +1,11 @@
 (ns re-demo.core
   (:require
    [reagent.core :as reagent]
-   [re-frame.core :as re-frame]
-   [re-demo.db :as db]
-   [re-demo.config :as config]))
+   [re-frame.core :as re-frame]))
+
+;; Config:
+(def debug?
+  ^boolean goog.DEBUG)
 
 ;; DB:
 (def default-db
@@ -25,11 +27,11 @@
 (defn main-panel []
   (let [name (re-frame/subscribe [::name])]
     [:div
-     [:h1 "Hello from " @name ", dear Reader!"]]))
+     [:h1 "Hello from " @name ", Dear Reader!"]]))
 
 ;; Core:
 (defn dev-setup []
-  (when config/debug?
+  (when debug?
     (enable-console-print!)
     (println "dev mode")))
 
