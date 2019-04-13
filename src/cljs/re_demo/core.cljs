@@ -38,8 +38,8 @@
   (reagent/render [main-panel]
                   (.getElementById js/document "app")))
 
-;; This appears to be called as  well from FIXME --- it does initialze
-;; DB after all ...
+;; This appears  to be called  as well  from the script  in index.html
+;; under static resources --- it does initialze DB after all ...
 (defn ^:export init []
   (re-frame/dispatch-sync [::initialize-db])
   (dev-setup)
