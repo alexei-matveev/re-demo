@@ -12,7 +12,7 @@
   :source-paths ["src/clj" "src/cljs"]
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
   :figwheel {:css-dirs ["resources/public/css"]
-             :ring-handler re-demo.handler/dev-handler}
+             :ring-handler re-demo.server/dev-handler}
   :profiles
   {:dev
    {:dependencies [[binaryage/devtools "0.9.10"]]
