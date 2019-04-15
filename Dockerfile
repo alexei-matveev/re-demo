@@ -19,9 +19,23 @@ WORKDIR /work
 ADD project.clj .
 ARG https_proxy=
 ARG http_proxy=
-RUN env | grep -i proxy
+#UN env | grep -i proxy
+
+# FIXME: some  CLojureScript build  (?)  dependencies are  not fetched
+# here  for some  reason.  Therefore  not  cached as  an Image  Layer.
+# Therefore fetched on EVERY BUILD a few lines below:
 RUN lein deps
+
+# FIXME: ./src alone seems not to suffice?
 ADD . .
+
+#
+# FIXME: every re-build comes:
+#
+#   Compiling ClojureScript...
+#   Retrieving cljsbuild/cljsbuild/1.1.7/cljsbuild-1.1.7.pom from clojars
+#   ...
+#
 RUN lein with-profile prod uberjar
 
 # FROM openjdk:8-jre-alpine
