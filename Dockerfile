@@ -1,7 +1,8 @@
 #
-# NOTE: Beware of the whitelisting in .dockerignore!
+# NOTE: Beware of the whitelisting  in .dockerignore! Docker on CentOS
+# 7 is not multistage aware ...
 #
-# Execute multistage build by prepeding sudo:
+# Execute build by prepeding sudo:
 #
 #     docker build -t f0bec0d/re-demo .
 #
