@@ -34,4 +34,6 @@ standalone jar.
 
 When you run the jar you can set  the port the ring server will use by
 setting the environment  variable PORT.  If it's not set,  it will run
-on port 3000 by default.
+on port 3000 by default:
+
+    port=3449 java -jar ./target/re-demo.jar
