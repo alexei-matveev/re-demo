@@ -1,10 +1,9 @@
 # re-demo
 
 A [re-frame](https://github.com/Day8/re-frame) application designed to
-... well, that part is up to you. The project was generated from the
-[template](https://github.com/Day8/re-frame-template).
-
-FIXME: what is the point of *.clj source?
+... well, that part  is up to you. The project  was generated from the
+[template](https://github.com/Day8/re-frame-template).  Later the most
+of the effect of option "+handler" was manually added.
 
 ## Development Mode
 
