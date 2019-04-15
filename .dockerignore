@@ -1,0 +1,7 @@
+# Ignore everything
+# **
+# Allow:
+# !target/re-demo.jar
+# !src
+# !resources/public/index.html
+# !project.clj

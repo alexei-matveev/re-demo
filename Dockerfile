@@ -1,39 +1,39 @@
 #
 # NOTE: Beware of the whitelisting in .dockerignore!
 #
-# Execute multistage build by
+# Execute multistage build by prepeding sudo:
 #
-#     docker build -t f0bec0d/zabbix-gateway .
+#     docker build -t f0bec0d/re-demo .
 #
-# and push it to Docker Hub:
+# evneutally mit build args vor proxies:
 #
-#     docker login
-#     docker push f0bec0d/zabbix-gateway
+#     docker build --build-arg https_proxy=$http_proxy --build-arg http_proxy=$http_proxy -t f0bec0d/re-demo .
 #
 # To run a container issue
 #
-#     docker run --rm -itd -p 15001:15001 f0bec0d/zabbix-gateway --zabbix-server=172.17.0.1
+#     docker run --rm -itd -p 8080:8080 f0bec0d/re-demo
 #
-# The default  Zabbix Server address  is localhost, which is  not what
-# you may  think inside the container.  The IP address of  your Docker
-# Host or rather Zabbix Server Hosts may differ though.
-#
-FROM clojure:lein AS builder
+FROM clojure:lein
+# ... AS builder
 WORKDIR /work
 ADD project.clj .
+ARG https_proxy=
+ARG http_proxy=
+RUN env | grep -i proxy
 RUN lein deps
-ADD src .
-RUN lein uberjar
+ADD . .
+RUN lein with-profile prod uberjar
 
-FROM openjdk:8-jre-alpine
+# FROM openjdk:8-jre-alpine
 MAINTAINER alexei.matveev@gmail.com
 WORKDIR /app
 
 # FWIW, uberjars, created  with lein uberjar, or all of  them (?)  are
 # not "stable". Rebuild  with "lein uberjar" changes the  hash. So the
 # image will always be rebuilt after a lein uberjar:
-COPY --from=builder /work/target/zabbix-gateway.jar /app/app.jar
+#OPY --from=builder /work/target/re-demo.jar /app/app.jar
+RUN mkdir -p /app && mv /work/target/re-demo.jar /app/app.jar
 
-# This is the reverse of the Zabbix server port 10051:
-EXPOSE 15001/tcp
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+# OpenShift will teach you not to use priviliged ports:
+EXPOSE 8080/tcp
+ENTRYPOINT ["env", "PORT=8080", "java", "-jar", "/app/app.jar"]
