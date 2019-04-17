@@ -6,18 +6,30 @@
 ;; Config:
 (def debug? ^boolean goog.DEBUG)
 
-;; Events:
-(re-frame/reg-event-db
- ::initialize-db
- ;; FIXME: The  two arguments are  ... The return value  is apparently
- ;; the initial value for the DB:
- (fn [_ _] {:name "Default Text"}))
+;;
+;; ### Events ###
+;;
 
-;; Subs:
+;;
+;; Two functions reg-even-db and reg-event-fx should not be confused!
+;;
+;; [1] https://github.com/Day8/re-frame/blob/master/docs/Coeffects.md
+(re-frame/reg-event-db
+ ;; The first argument of the registered "coeffect" handler appears to
+ ;; be the DB  itself.  The second is the event.   The return value is
+ ;; apparently the DB, in this case its initial value:
+ ::initialize-db (fn [db _] {:name "Default Text"}))
+
+(re-frame/reg-event-db
+ ;; The keyword ist  the leading entry of the event  vector. The event
+ ;; ist the whole vector ...
+ ::random-click (fn [db e] (assoc db :name (second e))))
+
+;;
+;; ### Subscriptions ###
+;;
 (re-frame/reg-sub
- ::name
- (fn [db]
-   (:name db)))
+ ::name (fn [db] (:name db)))
 
 ;;
 ;; ### Views ###
@@ -41,6 +53,8 @@
   (let [name (re-frame/subscribe [::name])]
     [:div
      [:h1 "Hello from " @name ", Dear Reader!"]
+     [:div {:on-click #(re-frame/dispatch [::random-click "New Name"])}
+      [:p "Try clicking on this par text ..."]]
      [collapsible "coll-1"
       "Lorem ipsum delirium, memento mori!"]
      [:p "Text inbetween ..."]
