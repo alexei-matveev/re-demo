@@ -19,11 +19,29 @@
  (fn [db]
    (:name db)))
 
-;; View:
+;;
+;; ### Views ###
+;;
+
+;;
+;; Collapsible Text with HTML5 [1]. Needs a lot of CSS voodoo, see
+;; public/css in the resources dir.
+;;
+;; [1] https://alligator.io/css/collapsible/
+;;
+(defn collapsible []
+  [:div.wrap-collapsible
+   [:input.toggle {:type "checkbox" :id "xxx"}]
+   [:label.lbl-toggle {:for "xxx"} "Clickme!"]
+   [:div.collapsible-content
+    [:div.content-inner
+     [:p "Lorem ipsum delirium, memento mori!"]]]])
+
 (defn main-panel []
   (let [name (re-frame/subscribe [::name])]
     [:div
-     [:h1 "Hello from " @name ", Dear Reader!"]]))
+     [:h1 "Hello from " @name ", Dear Reader!"]
+     [collapsible]]))
 
 ;; Core:
 (defn dev-setup []
