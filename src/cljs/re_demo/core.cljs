@@ -29,19 +29,23 @@
 ;;
 ;; [1] https://alligator.io/css/collapsible/
 ;;
-(defn collapsible []
+(defn collapsible [id text]
   [:div.wrap-collapsible
-   [:input.toggle {:type "checkbox" :id "xxx"}]
-   [:label.lbl-toggle {:for "xxx"} "Clickme!"]
+   [:input.toggle {:type "checkbox" :id id}]
+   [:label.lbl-toggle {:for id} "Clickme!"]
    [:div.collapsible-content
     [:div.content-inner
-     [:p "Lorem ipsum delirium, memento mori!"]]]])
+     [:p text]]]])
 
 (defn main-panel []
   (let [name (re-frame/subscribe [::name])]
     [:div
      [:h1 "Hello from " @name ", Dear Reader!"]
-     [collapsible]]))
+     [collapsible "coll-1"
+      "Lorem ipsum delirium, memento mori!"]
+     [:p "Text inbetween ..."]
+     [collapsible "coll-2"
+      "Another hidden text with different ID."]]))
 
 ;; Core:
 (defn dev-setup []
